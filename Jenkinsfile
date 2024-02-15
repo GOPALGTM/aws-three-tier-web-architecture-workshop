@@ -24,10 +24,10 @@ pipeline {
                     def imagePath = "/home/ubuntu/workspace/sample/k8s/backend-deployment.yml"
                     sh "sed -i 's/image: gopalgtm001\\/backend-workshop:.*/image: gopalgtm001\\/backend-workshop:${env.BUILD_NUMBER}/g' ${imagePath}"
                     sh "sed -i 's/image: gopalgtm001\\/frontend-workshop:.*/image: gopalgtm001\\/frontend-workshop:${env.BUILD_NUMBER}/g' ${imagePath}"
-                    sh "kubectl apply -f imagepath/backend-deployment.yml"
-                    sh "kubectl apply -f imagepath/frontend-deployment.yml"
-                    sh "kubectl apply -f imagepath/backend-svc.yml"
-                    sh "kubectl apply -f imagepath/frontend-svc.yml"
+                    sh "kubectl apply -f ${imagepath}/backend-deployment.yml"
+                    sh "kubectl apply -f ${imagepath}/frontend-deployment.yml"
+                    sh "kubectl apply -f ${imagepath}/backend-svc.yml"
+                    sh "kubectl apply -f ${imagepath}/frontend-svc.yml"
                 }
             }
         }
