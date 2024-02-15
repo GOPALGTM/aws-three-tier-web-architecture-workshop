@@ -5,8 +5,8 @@ pipeline {
         stage('Build'){
             steps {
                 echo "Building the Image"
-                sh "sudo docker build -t gopalgtm001/backend-workshop:latest /home/ubuntu/workshop/application-code/app-tier"
-                sh "sudo docker build -t gopalgtm001/frontend-workshop:latest /home/ubuntu/workshop/application-code/web-tier"
+                sh "sudo docker build -t gopalgtm001/backend-workshop:latest /home/ubuntu/workspace/sample/application-code/app-tier"
+                sh "sudo docker build -t gopalgtm001/frontend-workshop:latest /home/ubuntu/workspace/sample/application-code/web-tier"
             }
         }
         stage("push"){
