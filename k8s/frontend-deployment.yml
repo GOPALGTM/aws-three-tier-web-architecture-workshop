@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: frontend-app
-        image: gopalgtm001/frontend:latest
+        image: gopalgtm001/frontend-workshop:latest
         
         ports:
         - containerPort: 3000
