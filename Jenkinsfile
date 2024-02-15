@@ -5,25 +5,30 @@ pipeline {
         stage('Build'){
             steps {
                 echo "Building the Image"
-                sh "sudo docker build -t gopalgtm001/backend-workshop:latest /home/ubuntu/workspace/sample/application-code/app-tier"
-                sh "sudo docker build -t gopalgtm001/frontend-workshop:latest /home/ubuntu/workspace/sample/application-code/web-tier"
+                sh "sudo docker build -t gopalgtm001/backend-workshop:${env.BUILD_NUMBER} /home/ubuntu/workspace/sample/application-code/app-tier"
+                sh "sudo docker build -t gopalgtm001/frontend-workshop:${env.BUILD_NUMBER} /home/ubuntu/workspace/sample/application-code/web-tier"
             }
         }
         stage("push"){
             steps{
                 withCredentials([usernamePassword(credentialsId:"docker",passwordVariable:"dockerHubPass",usernameVariable:"dockerHubUser")]){
                 sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}"
-                sh "docker push ${env.dockerHubUser}/backend-workshop:latest"
-                sh "docker push ${env.dockerHubUser}/frontend-workshop:latest"
-                echo "hello"
+                sh "docker push ${env.dockerHubUser}/backend-workshop:${env.BUILD_NUMBER}"
+                sh "docker push ${env.dockerHubUser}/frontend-workshop:${env.BUILD_NUMBER}"
                 }
             }
         }
-        stage('Deploy'){
+        stage('Deploy') {
             steps {
-                echo "Deploying the application"
-                sh "sudo docker run -d -p 4000:4000 gopalgtm001/backend-workshop:latest"
-                sh "sudo docker run -d -p 3000:3000 gopalgtm001/frontend-workshop:latest"
+                script {
+                    def imagePath = "/home/ubuntu/workspace/sample/k8s/backend-deployment.yml"
+                    sh "sed -i 's/image: gopalgtm001\\/backend-workshop:.*/image: gopalgtm001\\/backend-workshop:${env.BUILD_NUMBER}/g' ${imagePath}"
+                    sh "sed -i 's/image: gopalgtm001\\/frontend-workshop:.*/image: gopalgtm001\\/frontend-workshop:${env.BUILD_NUMBER}/g' ${imagePath}"
+                    sh "kubectl apply -f imagepath/backend-deployment.yml"
+                    sh "kubectl apply -f imagepath/frontend-deployment.yml"
+                    sh "kubectl apply -f imagepath/backend-svc.yml"
+                    sh "kubectl apply -f imagepath/frontend-svc.yml"
+                }
             }
         }
     }
