@@ -20,7 +20,7 @@ class DatabaseDemo extends Component {
     }
 
     populateData() {
-        this.fetch_retry("http://10.108.159.25:4000/transaction", 3)
+        this.fetch_retry("http://192.168.49.2:30025/transaction", 3)
             .then(res => res.json())
             .then((data) => {
                 this.setState({ transactions: data.result });
@@ -57,7 +57,7 @@ class DatabaseDemo extends Component {
         const requestOptions = {
             method: 'DELETE'
         };
-        fetch("http://10.108.159.25:4000/transaction", requestOptions)
+        fetch("http://192.168.49.2:30025/transaction", requestOptions)
             .then(response => response.json())
             .then(data => this.populateData());
 
@@ -73,7 +73,7 @@ class DatabaseDemo extends Component {
             body: JSON.stringify({ "amount": this.state.text_amt, "desc": this.state.text_desc })
         };
 
-        fetch("http://10.108.159.25:4000/transaction", requestOptions)
+        fetch("http://192.168.49.2:30025/transaction", requestOptions)
             .then(response => response.json())
             .then(data => this.populateData());
 
