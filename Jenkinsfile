@@ -21,9 +21,9 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    def imagePath = "/home/ubuntu/workspace/sample/k8s/backend-deployment.yml"
-                    sh "sed -i 's/image: gopalgtm001\\/backend-workshop:.*/image: gopalgtm001\\/backend-workshop:${env.BUILD_NUMBER}/g' ${imagePath}"
-                    sh "sed -i 's/image: gopalgtm001\\/frontend-workshop:.*/image: gopalgtm001\\/frontend-workshop:${env.BUILD_NUMBER}/g' ${imagePath}"
+                    def imagePath = "/home/ubuntu/workspace/sample/k8s"
+                    sh "sed -i 's/image: gopalgtm001\\/backend-workshop:.*/image: gopalgtm001\\/backend-workshop:${env.BUILD_NUMBER}/g' ${imagePath}/backend-deployment.yml"
+                    sh "sed -i 's/image: gopalgtm001\\/frontend-workshop:.*/image: gopalgtm001\\/frontend-workshop:${env.BUILD_NUMBER}/g' ${imagePath}/frontend-deployment.yml"
                     sh "kubectl apply -f ${imagepath}/backend-deployment.yml"
                     sh "kubectl apply -f ${imagepath}/frontend-deployment.yml"
                     sh "kubectl apply -f ${imagepath}/backend-svc.yml"
