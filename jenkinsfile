@@ -21,6 +21,7 @@ pipeline {
                 sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}"
                 sh "docker push ${env.dockerHubUser}/backend-workshop:latest"
                 sh "docker push ${env.dockerHubUser}/frontend-workshop:latest"
+                echo "hello"
                 }
             }
         }
