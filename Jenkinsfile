@@ -2,12 +2,6 @@ pipeline {
     agent { label "NODE-DEV"}
     
     stages{
-        stage('Clone Code'){
-            steps {
-                echo "Cloning the code"
-                git url:"https://github.com/GOPALGTM/aws-three-tier-web-architecture-workshop", branch:"main"
-            }
-        }
         stage('Build'){
             steps {
                 echo "Building the Image"
